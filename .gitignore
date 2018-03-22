@@ -1,0 +1,3 @@
+# Vendor directories and files
+.idea/*
+vendor/*
