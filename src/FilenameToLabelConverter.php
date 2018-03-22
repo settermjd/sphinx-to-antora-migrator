@@ -1,19 +1,44 @@
 <?php
+/**
+ * @author Matthew Setter <matthew@matthewsetter.com>
+ *
+ * @copyright Copyright (c) 2017, ownCloud GmbH
+ * @license AGPL-3.0
+ *
+ * This code is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License, version 3,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License, version 3,
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ */
 
 namespace SphinxDocToAntoraMigrator;
 
 /**
  * Class FilenameToLabelConverter
- * @package FilenameToLabelConverter
+ * @package SphinxDocToAntoraMigrator
  */
 class FilenameToLabelConverter
 {
+    /**
+     * Words such as prepositions and conjunctions that can be all lowercaseed
+     */
     const SMALL_WORDS = [
         'of','a','the','and','an','or','nor','but','is','if',
         'then','else','when', 'at','from','by','on','off',
         'for','in','out','over','to','into','with'
     ];
 
+    /**
+     * Core elements to be replaced
+     */
     const CORE_REPLACEMENTS = ['_', '-'];
 
     /**
@@ -64,7 +89,7 @@ class FilenameToLabelConverter
      */
     public function convert(string $filename) : string
     {
-        return $this->fixTitlecase(
+        return $this->titlecase(
             $this->convertCustomWords(
                 $this->convertUppercaseWords(
                     str_replace(self::CORE_REPLACEMENTS, ' ', $filename)
@@ -73,7 +98,13 @@ class FilenameToLabelConverter
         );
     }
 
-    private function fixTitlecase(string $text) : string
+    /**
+     * Titlecases the supplied string
+     *
+     * @param string $text
+     * @return string
+     */
+    private function titlecase(string $text) : string
     {
         return preg_replace_callback(
             sprintf('/\b(%s)\b/i', implode('|', self::SMALL_WORDS)),
