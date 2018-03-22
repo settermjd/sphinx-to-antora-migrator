@@ -1,6 +1,6 @@
 <?php
 
-namespace FilenameToLabelConverter;
+namespace SphinxDocToAntoraMigrator;
 
 /**
  * Class FilenameToLabelConverter

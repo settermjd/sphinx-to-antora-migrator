@@ -1,8 +1,8 @@
 <?php
 
-namespace FilenameToLabelConverter\Tests;
+namespace SphinxDocToAntoraMigrator\Tests;
 
-use FilenameToLabelConverter\FilenameToLabelConverter;
+use SphinxDocToAntoraMigrator\FilenameToLabelConverter;
 use PHPUnit\Framework\TestCase;
 
 class FilenameToLabelConverterTest extends TestCase
