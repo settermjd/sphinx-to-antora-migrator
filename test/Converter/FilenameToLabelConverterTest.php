@@ -19,9 +19,9 @@
  *
  */
 
-namespace SphinxDocToAntoraMigrator\Tests;
+namespace SphinxDocToAntoraMigrator\Tests\Converter;
 
-use SphinxDocToAntoraMigrator\FilenameToLabelConverter;
+use SphinxDocToAntoraMigrator\Converter\FilenameToLabelConverter;
 use PHPUnit\Framework\TestCase;
 
 /**

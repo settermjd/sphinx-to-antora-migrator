@@ -19,7 +19,7 @@
  *
  */
 
-namespace SphinxDocToAntoraMigrator;
+namespace SphinxDocToAntoraMigrator\Converter;
 
 /**
  * Class FilenameToLabelConverter
