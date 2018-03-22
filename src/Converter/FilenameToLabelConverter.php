@@ -27,13 +27,15 @@ namespace SphinxDocToAntoraMigrator\Converter;
  */
 class FilenameToLabelConverter
 {
+    const SEARCH_REGEX = "/\b(%s)\b/i";
+
     /**
      * Words such as prepositions and conjunctions that can be all lowercaseed
      */
     const SMALL_WORDS = [
-        'of','a','the','and','an','or','nor','but','is','if',
-        'then','else','when', 'at','from','by','on','off',
-        'for','in','out','over','to','into','with'
+        'of', 'a', 'the', 'and', 'an', 'or', 'nor', 'but', 'is', 'if',
+        'then', 'else', 'when', 'at', 'from', 'by', 'on', 'off',
+        'for', 'in', 'out', 'over', 'to', 'into', 'with'
     ];
 
     /**
@@ -87,15 +89,17 @@ class FilenameToLabelConverter
      * @param string $filename
      * @return string
      */
-    public function convert(string $filename) : string
+    public function convert(string $filename): string
     {
-        return $this->titlecase(
+        $filename = $this->titlecase(
             $this->convertCustomWords(
                 $this->convertUppercaseWords(
-                    str_replace(self::CORE_REPLACEMENTS, ' ', $filename)
+                    $this->doInitialCleanup($filename)
                 )
             )
         );
+
+        return str_ireplace('Xref', 'xref', $filename);
     }
 
     /**
@@ -104,10 +108,10 @@ class FilenameToLabelConverter
      * @param string $text
      * @return string
      */
-    private function titlecase(string $text) : string
+    private function titlecase(string $text): string
     {
         return preg_replace_callback(
-            sprintf('/\b(%s)\b/i', implode('|', self::SMALL_WORDS)),
+            sprintf(self::SEARCH_REGEX, implode('|', self::SMALL_WORDS)),
             function ($match) {
                 return strtolower($match[0]);
             },
@@ -119,12 +123,13 @@ class FilenameToLabelConverter
      * @param string $filename
      * @return string
      */
-    private function convertUppercaseWords(string $filename) : string
+    private function convertUppercaseWords(string $filename): string
     {
         return preg_replace_callback(
-            sprintf("/(%s)/i", implode('|', self::ALWAYS_UPPERCASE)),
+            sprintf(self::SEARCH_REGEX, implode('|', self::ALWAYS_UPPERCASE)),
             function ($match) {
-                return strtoupper($match[0]);
+                //return strtoupper($match[0]);
+                return $match[0];
             },
             $filename
         );
@@ -134,14 +139,26 @@ class FilenameToLabelConverter
      * @param string $filename
      * @return string
      */
-    private function convertCustomWords(string $filename) : string
+    private function convertCustomWords(string $filename): string
     {
         return preg_replace_callback(
-            sprintf("/(%s)/i", implode('|', array_keys(self::CUSTOM_WORDS))),
+            sprintf(self::SEARCH_REGEX, implode('|', array_keys(self::CUSTOM_WORDS))),
             function ($match) {
                 return self::CUSTOM_WORDS[strtolower($match[0])];
             },
             $filename
         );
     }
+
+    private function doInitialCleanup(string $filename): string
+    {
+        return preg_replace_callback(
+            '/\[.*([-_]+).*\]/',
+            function ($match) {
+                return str_replace(['-', '_'], ' ', $match[0]);
+            },
+            $filename
+        );
+    }
+
 }

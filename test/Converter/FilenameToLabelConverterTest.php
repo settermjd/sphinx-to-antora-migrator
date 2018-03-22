@@ -33,23 +33,64 @@ class FilenameToLabelConverterTest extends TestCase
     public function converterDataProvider()
     {
         return [
-            ['javascript_and_css', 'JavaScript and CSS'],
-            ['activity_configuration', 'Activity Configuration'],
-            ['ldap_proxy_cache_server_setup', 'LDAP Proxy Cache Server Setup'],
-            ['index_php_less_urls', 'Index PHP Less URLs'],
-            ['background_jobs_configuration', 'Background Jobs Configuration'],
-            ['import_ssl_cert', 'Import SSL Cert'],
-            ['user_provisioning_api', 'User Provisioning API'],
-            ['antivirus_configuration', 'AntiVirus Configuration'],
-            ['Ocs-recipient-api', 'OCS Recipient API'],
-            ['two-factor-provider', 'Two Factor Provider'],
-            ['l10n', 'L10N'],
-            ['nginx_configuration', 'NGINX Configuration'],
-            ['selinux_configuration', 'SELinux Configuration'],
-            ['user_auth_ftp_smb_imap', 'User Auth FTP SMB IMAP'],
-            ['openstack', 'OpenStack'],
-            ['onedrive', 'OneDrive'],
-            ['clamav', 'ClamAV'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[javascript_and_css]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[JavaScript and CSS]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[activity_configuration]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Activity Configuration]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[ldap_proxy_cache_server_setup]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[LDAP Proxy Cache Server Setup]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[index_php_less_urls]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Index PHP Less URLs]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[background_jobs_configuration]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Background Jobs Configuration]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[import_ssl_cert]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Import SSL Cert]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[user_provisioning_api]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[User Provisioning API]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[antivirus_configuration]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[AntiVirus Configuration]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Ocs-recipient-api]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[OCS Recipient API]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[two-factor-provider]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Two Factor Provider]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[l10n]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[L10N]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[nginx_configuration]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[NGINX Configuration]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[selinux_configuration]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[SELinux Configuration]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[user_auth_ftp_smb_imap]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[User Auth FTP SMB IMAP]'],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[openstack]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[OpenStack]'
+            ],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[onedrive]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[OneDrive]'
+            ],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[clamav]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[ClamAV]'
+            ],
+            [
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Upgrade Php]',
+                '************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/upgrading/upgrade_php.adoc[Upgrade PHP]'
+            ]
         ];
     }
 
