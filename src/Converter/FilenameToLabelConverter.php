@@ -28,6 +28,8 @@ namespace SphinxDocToAntoraMigrator\Converter;
 class FilenameToLabelConverter
 {
     const SEARCH_REGEX = "/\b(%s)\b/i";
+    const LABEL_REGEX = '/.*\[(.*)\]/';
+    const FIX_REGEX = '/(.*)(\[.*\])/';
 
     /**
      * Words such as prepositions and conjunctions that can be all lowercaseed
@@ -86,20 +88,28 @@ class FilenameToLabelConverter
     ];
 
     /**
+     * Convert the string so that it can be used as an Asciidoc link
      * @param string $filename
      * @return string
      */
     public function convert(string $filename): string
     {
-        $filename = $this->titlecase(
-            $this->convertCustomWords(
-                $this->convertUppercaseWords(
-                    $this->doInitialCleanup($filename)
-                )
-            )
-        );
+        $status = preg_match(self::LABEL_REGEX, $filename, $matches);
+        list(, $match) = $matches;
 
-        return str_ireplace('Xref', 'xref', $filename);
+        if ($status) {
+            $replacement = $this->titlecase(
+                $this->convertCustomWords(
+                    $this->convertUppercaseWords(
+                        $this->doInitialCleanup($match)
+                    )
+                )
+            );
+
+            return preg_replace(self::FIX_REGEX, "$1[${replacement}]", $filename);
+        }
+
+        return $filename;
     }
 
     /**
@@ -128,8 +138,7 @@ class FilenameToLabelConverter
         return preg_replace_callback(
             sprintf(self::SEARCH_REGEX, implode('|', self::ALWAYS_UPPERCASE)),
             function ($match) {
-                //return strtoupper($match[0]);
-                return $match[0];
+                return strtoupper($match[0]);
             },
             $filename
         );
@@ -150,15 +159,15 @@ class FilenameToLabelConverter
         );
     }
 
+    /**
+     * Does an initial set of cleanup on the supplied string
+     *
+     * @param string $filename
+     * @return string
+     */
     private function doInitialCleanup(string $filename): string
     {
-        return preg_replace_callback(
-            '/\[.*([-_]+).*\]/',
-            function ($match) {
-                return str_replace(['-', '_'], ' ', $match[0]);
-            },
-            $filename
-        );
+        return str_replace(['_', '-'], ' ', $filename);
     }
 
 }
