@@ -38,7 +38,7 @@ class FilenameToLabelConverter
     const SMALL_WORDS = [
         'of', 'a', 'the', 'and', 'an', 'or', 'nor', 'but', 'is', 'if',
         'then', 'else', 'when', 'at', 'from', 'by', 'on', 'off',
-        'for', 'in', 'out', 'over', 'to', 'into', 'with'
+        'for', 'in', 'out', 'over', 'to', 'into', 'with', 'it'
     ];
 
     /**
