@@ -66,6 +66,7 @@ class FilenameToLabelConverter
         'smb',
         'ssl',
         'ui',
+        'ucs',
         'url',
         'l10n',
     ];
