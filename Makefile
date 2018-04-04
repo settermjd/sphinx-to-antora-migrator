@@ -3,21 +3,24 @@
 
 # You can set these variables from the command line.
 BUILDDIR 	  = ./build
+VENDORDIR	  = ./vendor
 
 .PHONY: help clean build-phar
 
-build-phar: clean composer
+build: clean composer build-phar clean
+
+build-phar:
 	@echo "Building Phar archive."
-	php phar-creator.php 
+	php create-phar.php
 	@echo "Moving Phar archive to build directory."
-	php phar-creator.php && mv converter.phar build 
+	mv converter.phar build 
 	@echo
 	@echo "Finished building Phar archive."
 	@echo
 
 composer: 
 	@echo "Installing required packages via Composer."
-	cd source && composer install && cd -
+	composer install
 	@echo
 	@echo "Finished installing required packages."
 	@echo
@@ -30,7 +33,8 @@ help:
 
 clean:
 	@echo "Cleaning out old build artifacts."
-	-rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)/*
+	rm -rf $(VENDORDIR)/*
 	@echo
 	@echo "Finished cleaning out old build artifacts."
 	@echo
