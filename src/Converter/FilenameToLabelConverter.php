@@ -27,6 +27,7 @@ namespace SphinxDocToAntoraMigrator\Converter;
  */
 class FilenameToLabelConverter
 {
+    //const SEARCH_REGEX = "/\b(%s)\b/i";
     const SEARCH_REGEX = "/\b(%s)\b/i";
     const LABEL_REGEX = '/.*\[(.*)\]/';
     const FIX_REGEX = '/(.*)(\[.*\])/';
@@ -90,27 +91,18 @@ class FilenameToLabelConverter
 
     /**
      * Convert the string so that it can be used as an Asciidoc link
-     * @param string $filename
+     * @param string $text
      * @return string
      */
-    public function convert(string $filename): string
+    public function convert(string $text): string
     {
-        $status = preg_match(self::LABEL_REGEX, $filename, $matches);
-        list(, $match) = $matches;
-
-        if ($status) {
-            $replacement = $this->titlecase(
-                $this->convertCustomWords(
-                    $this->convertUppercaseWords(
-                        $this->doInitialCleanup($match)
-                    )
+        return $this->titlecase(
+            $this->convertCustomWords(
+                $this->convertUppercaseWords(
+                    $this->doInitialCleanup($text)
                 )
-            );
-
-            return preg_replace(self::FIX_REGEX, "$1[${replacement}]", $filename);
-        }
-
-        return $filename;
+            )
+        );
     }
 
     /**
@@ -122,53 +114,60 @@ class FilenameToLabelConverter
     private function titlecase(string $text): string
     {
         return preg_replace_callback(
-            sprintf(self::SEARCH_REGEX, implode('|', self::SMALL_WORDS)),
+            self::FIX_REGEX,
             function ($match) {
-                return strtolower($match[0]);
+                var_dump($match); exit;
+                return $match[1] . str_ireplace(self::SMALL_WORDS, self::SMALL_WORDS, $match[2]);
             },
             ucwords($text)
         );
     }
 
     /**
-     * @param string $filename
+     * @param string $text
      * @return string
      */
-    private function convertUppercaseWords(string $filename): string
+    private function convertUppercaseWords(string $text): string
     {
         return preg_replace_callback(
-            sprintf(self::SEARCH_REGEX, implode('|', self::ALWAYS_UPPERCASE)),
+            self::FIX_REGEX,
             function ($match) {
-                return strtoupper($match[0]);
+                return $match[1] . str_ireplace(self::ALWAYS_UPPERCASE, array_map('strtoupper', self::ALWAYS_UPPERCASE), $match[2]);
             },
-            $filename
+            $text
         );
     }
 
     /**
-     * @param string $filename
+     * @param string $text
      * @return string
      */
-    private function convertCustomWords(string $filename): string
+    private function convertCustomWords(string $text): string
     {
         return preg_replace_callback(
-            sprintf(self::SEARCH_REGEX, implode('|', array_keys(self::CUSTOM_WORDS))),
+            self::FIX_REGEX,
             function ($match) {
-                return self::CUSTOM_WORDS[strtolower($match[0])];
+                return $match[1] . str_ireplace(array_keys(self::CUSTOM_WORDS), array_values(self::CUSTOM_WORDS), $match[2]);
             },
-            $filename
+            $text
         );
     }
 
     /**
      * Does an initial set of cleanup on the supplied string
      *
-     * @param string $filename
+     * @param string $text
      * @return string
      */
-    private function doInitialCleanup(string $filename): string
+    private function doInitialCleanup(string $text): string
     {
-        return str_replace(['_', '-'], ' ', $filename);
+        return preg_replace_callback(
+            self::FIX_REGEX,
+            function ($match) {
+                return $match[1] . str_replace(['_', '-'], ' ', $match[2]);
+            },
+            $text
+        );
     }
 
 }
