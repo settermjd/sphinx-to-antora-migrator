@@ -22,7 +22,7 @@ To manually rebuild the Phar archive, run the following commands:
 ```
 cd source
 composer install
-php phar-creator.php
+php create-phar.php
 ```
 
 When completed, the Phar archive will be located in the root of the repository, and named `converter.phar`.
