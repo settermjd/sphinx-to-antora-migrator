@@ -46,12 +46,12 @@ class FilenameToLabelConverterTest extends TestCase
 EOD;
 
         $formatted = <<<EOD
-************** xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/ucs/add-groups-and-users.adoc[Add Groups and Users]
+************** xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/ucs/add-groups-and-users.adoc[Add groups and users]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/Active_Directory.adoc[Active Directory]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/Backup.adoc[Backup]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/Collabora.adoc[Collabora]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/clamav.adoc[ClamAV]
-************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/howto-update-owncloud.adoc[Howto Update ownCloud]
+************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/howto-update-owncloud.adoc[Howto update ownCloud]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/index.adoc[Index]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/installation.adoc[Installation]
 ************* xref:./../../../../clients/ownCloud/antora-build/admin_manual/modules/admin_manual/pages/appliance/managing-ucs.adoc[Managing UCS]

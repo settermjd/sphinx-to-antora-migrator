@@ -27,18 +27,16 @@ namespace SphinxDocToAntoraMigrator\Converter;
  */
 class FilenameToLabelConverter
 {
-    //const SEARCH_REGEX = "/\b(%s)\b/i";
-    const SEARCH_REGEX = "/\b(%s)\b/i";
-    const LABEL_REGEX = '/.*\[(.*)\]/';
+    const SEARCH_REGEX = "/(.*adoc)\[(.*)\]/i";
     const FIX_REGEX = '/(.*)(\[.*\])/';
 
     /**
      * Words such as prepositions and conjunctions that can be all lowercaseed
      */
     const SMALL_WORDS = [
-        'of', 'a', 'the', 'and', 'an', 'or', 'nor', 'but', 'is', 'if',
+        'of', 'the', 'and', 'an', 'or', 'nor', 'but', 'is', 'if',
         'then', 'else', 'when', 'at', 'from', 'by', 'on', 'off',
-        'for', 'in', 'out', 'over', 'to', 'into', 'with', 'it'
+        'for', 'out', 'over', 'to', 'into', 'with', 'it', 'a', 'in'
     ];
 
     /**
@@ -114,12 +112,18 @@ class FilenameToLabelConverter
     private function titlecase(string $text): string
     {
         return preg_replace_callback(
-            self::FIX_REGEX,
+            self::SEARCH_REGEX,
             function ($match) {
-                var_dump($match); exit;
-                return $match[1] . str_ireplace(self::SMALL_WORDS, self::SMALL_WORDS, $match[2]);
+                $tmp = preg_replace_callback(
+                    sprintf('/\b(%s)\b/i', implode('|', self::SMALL_WORDS)),
+                    function ($m) {
+                        return strtolower($m[0]);
+                    },
+                    $match[2]
+                );
+                return sprintf('%s[%s]', $match[1], $tmp);
             },
-            ucwords($text)
+            $text
         );
     }
 
