@@ -35,7 +35,7 @@ To creating an AsciiDoc navigation menu, you have to pass a list of AsciiDoc fil
 
 The following example shows how to find all AsciiDoc files, and to pipe that file list to the`navigation:build-from-files` command.
 
-```
+```console
 find ./path/to/my/manual/modules/ROOT/pages \
 	-type f -name "*.adoc" | \
 	php converter.phar navigation:build-from-files
@@ -45,13 +45,13 @@ find ./path/to/my/manual/modules/ROOT/pages \
 
 To list the available commands, supported by the Phar archive, just run it without any additional arguments, as in the example command below:
 
-```
+```console
 php converter.phar
 ```
 
 Currently, this will output the following to the console:
 
-```
+```php
 #!/usr/bin/env php
 
 Console Tool
