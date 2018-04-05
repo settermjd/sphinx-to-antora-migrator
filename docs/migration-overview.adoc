@@ -1,0 +1,54 @@
+= Migration Overview
+
+Migrating from Sphinx-Doc to Antora, (or even any other build environment) isn’t the easiest process in the world. 
+There are a lot of steps that have to be taken into consideration. 
+What’s more, as Sphinx-Doc uses a series of custom extensions to it’s base file format, reStructuredText, and there are no standard tools that know all of those extensions, the process is consequently made even harder.
+But despite that, it is achievable, if somewhat challenging.
+
+Here are a list of the steps that need to be completed, to migrate to Antora, from Sphinx-Doc:
+
+- Setup a fresh installation of Antora.
+- Settle on the documentation structure. This may be an easy question to answer, as you may only have one project. If that’s the case, then you only have on manual. However, you may have a series of manuals that you’re migrating. Given that, do you have one monolithic manual, or  series of separate manuals?
+- Use Pandoc to migrate the content from reStructuredText to AsciiDoc format.
+- Generate a navigation file for each manual. This is currently available using the `navigation:build-from-files` command which the Phar file offers.
+- Review exported AsciiDoc documentation for errors and non-migratable content. As there is no tool that can provide 100% compatibility and export support for Sphinx-Doc’s reStructuredText, a manual review needs to be carried out to find the markup that was either incorrectly converted, or removed as it was not understood. This includes: 
+  - Top-level file headers.
+  - AsciiDoc `image` directive correction. This needs to be a composition of the site’s name, from the top-level antora.yml file’s `name` directive, the manual’s name, `_images`, and the path to the file in the module’s `assets/images` directory. For example: `/owncloud-docs/admin_manual/_images/appliance/ucs/ucs-owncloud-portal.png`.
+  - Correct double-backticks to single backticks.
+  - Correct the generic inline code examples
+- Move the assets to the to the `assets` directory.
+
+== Converting Files to AsciiDoc format with Pandoc
+
+To converting files to AsciiDoc format with Pandoc, you can use the following command example as something to get started with. 
+This will recursively find any reStructuredText file and use Pandoc to export it to AsciiDoc format, giving it an `.adoc` file extension.
+
+....
+find ./ -type f -name "*.rst" -exec pandoc -s -S {} -t asciidoc -o {}.adoc \;
+....
+
+== Converting Sphinx-Doc Backticks to AsciiDoc
+
+....
+find ./ -type f -name "*.adoc" -exec rpl "''" "\`" {} \;
+....
+
+== Correcting Asset Paths
+
+=== Images
+
+Images are left with the path that they had. This is likely not what you’re after.
+To correct it, you can use `rpl`, in tandem with `find` command to do a global find and replace. For example:
+
+....
+find ./ -type f -name "*.adoc" -exec rpl "../images" "/owncloud-docs/admin_manual/_images" {} \;
+....
+
+== Generating a Navigation Menu
+
+To generate a navigation menu, based on the file & directory structure of your content, use the following command example as something to get started with. 
+This will find a list of all the AsciiDoc files and pipe them through to the converter.phar file’s navigation:build-from-files command, and store the output in a nav.adoc file, which is the file Antora uses for a navigation file.
+
+....
+find ./ -type f -name "*.adoc" | php ../../../../converter.phar navigation:build-from-files > nav.adoc
+....
