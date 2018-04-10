@@ -72,3 +72,7 @@ This can be fixed with a regex, similar to the following examples
 ....
 sed -i '' 's/`\*\*\([a-zA-Z ]*\)\*\*`/"\*\*\1\*\*"/g' nav.adoc
 ....
+
+== Sphinx-Doc references no longer work and the reference is left behind
+
+For example, on admin_manual/appliance/clamav.rst there's the text: "Please refer to the ClamAV documentation <configure_clamav_antivirus_scanner_label> for instructions on how to do that". 
