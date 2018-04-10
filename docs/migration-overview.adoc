@@ -52,3 +52,15 @@ This will find a list of all the AsciiDoc files and pipe them through to the con
 ....
 find ./ -type f -name "*.adoc" | php ../../../../converter.phar navigation:build-from-files > nav.adoc
 ....
+
+
+== Asciidoctor doesn't support bolding text inside code blocks 
+
+_GitHub-flavoured Markdown doesn't either_
+
+For example `**Add objects**` is not valid. 
+This can be fixed with a regex, similar to 
+
+....
+%s/`**([a-zA-Z ]*)**`/"**\1**"/g
+....
