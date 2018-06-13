@@ -76,3 +76,24 @@ sed -i '' 's/`\*\*\([a-zA-Z ]*\)\*\*`/"\*\*\1\*\*"/g' nav.adoc
 == Sphinx-Doc references no longer work and the reference is left behind
 
 For example, on admin_manual/appliance/clamav.rst there's the text: "Please refer to the ClamAV documentation <configure_clamav_antivirus_scanner_label> for instructions on how to do that". 
+
+== Correcting RST-style Header Markup
+
+Pandoc does a pretty good job of converting sphinx-doc flavoured reStructuredText to AsciiDoc, but the headers remain in the reStructuredText style. 
+If you want to use Asciidoctor-pdf to convert the documentation to a PDF, then these will break the process. 
+So they need to be converted to pure AsciiDoc. 
+In the documentation that I’ve converted, there are three levels of headers:
+
+- The page-level headers are underlined with `=`
+- The second-headers are underlined with `-`
+- The third-level headers are underlined with `~`
+
+To convert these, you can use the following regular expressions:
+
+- page-level headers: `(\A([a-zA-Z ?!]*)(?=\n)(\n={2,}))`
+- second-level headers: `(^([a-zA-Z ?!]*)(?=\n)(\n-{2,}))`
+- third-level headers: `(^([a-zA-Z ?!]*)(?=\n)(\n~{2,}))`
+
+You may have to update the second named group to account for more punctuation that these support, but they provide the basics of what’s required. 
+I wasn’t able to get it working on the command-line with sed, so ended up using SublimeText instead. 
+It would have been great to use Atom, but it didn’t appear to support the regexes.
